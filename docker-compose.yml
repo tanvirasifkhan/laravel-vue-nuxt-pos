@@ -1,0 +1,83 @@
+networks:
+  pos:
+    driver: bridge
+
+services:
+
+  # service for the backend api
+  backend:
+    container_name: "pos-backend"
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./backend:/backend
+    depends_on:
+      - database-server
+    networks:
+      - pos
+
+  # service for the frontend
+  admin:
+    container_name: "pos-admin"
+    build:
+      context: ./admin
+      dockerfile: Dockerfile
+    ports:
+      - "5173:5173"
+    volumes:
+      - ./admin:/admin
+    environment:
+      - CHOKIDAR_USEPOLLING = true
+    networks:
+      - pos
+
+  web:
+    container_name: "pos-web"
+    build: 
+      context: ./web
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./web:/web
+    environment:
+      - CHOKIDAR_USEPOLLING=true
+    networks:
+      - pos
+  
+  # service for mysql database server
+  database-server:
+    container_name: "pos-database-server"
+    image: mysql
+    ports:
+      - "3306:3306"
+    volumes:
+      - dbdata:/var/lib/mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: ""
+      MYSQL_PASSWORD: ""
+      MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
+    networks:
+      - pos
+  
+  # service for phpmyadmin database management
+  database-admin-panel:
+    container_name: "pos-database-admin-panel"
+    image: phpmyadmin
+    ports:
+      - "8080:80"
+    restart: always
+    environment: 
+      PMA_HOST: database-server
+      PMA_PASSWORD: ""
+      PMA_USER: "root"
+    depends_on: 
+      - database-server
+    networks:
+      - pos
+
+volumes:
+  dbdata:
