@@ -9,13 +9,3 @@ admin/node_modules
 admin/dist
 admin/.env
 admin/.vscode
-
-web/node_modules
-web/*.log*
-web/.nuxt
-web/.nitro
-web/.cache
-web/.output
-web/.env
-web/dist
-web/.DS_Store

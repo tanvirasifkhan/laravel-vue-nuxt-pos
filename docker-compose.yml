@@ -34,19 +34,6 @@ services:
     networks:
       - pos
 
-  web:
-    container_name: "pos-web"
-    build: 
-      context: ./web
-    ports:
-      - "3000:3000"
-    volumes:
-      - ./web:/web
-    environment:
-      - CHOKIDAR_USEPOLLING=true
-    networks:
-      - pos
-  
   # service for mysql database server
   database-server:
     container_name: "pos-database-server"
