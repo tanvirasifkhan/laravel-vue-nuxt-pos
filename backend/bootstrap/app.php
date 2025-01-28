@@ -15,6 +15,7 @@ return Application::configure(basePath: dirname(__DIR__))
         then:function(){
             Route::prefix('api/categories')->group(base_path('routes/category.php'));
             Route::prefix('api/suppliers')->group(base_path('routes/supplier.php'));
+            Route::prefix('api/products')->group(base_path('routes/product.php'));
         }
     )
     ->withMiddleware(function (Middleware $middleware) {

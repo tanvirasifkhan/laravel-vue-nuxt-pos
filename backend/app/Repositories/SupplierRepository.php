@@ -30,6 +30,19 @@ class SupplierRepository implements CommonInterface
     }
 
     /**
+     * fetch all suppliers by search
+     *
+     * @return Builder
+     */
+    public function search(string $keyword): Builder
+    {
+        return Supplier::where('name', 'LIKE', '%' . strtolower($keyword) . '%')
+            ->orWhere('email', 'LIKE', '%' . strtolower($keyword) . '%')
+            ->orWhere('phone', 'LIKE', '%' . strtolower($keyword) . '%')
+            ->orWhere('address', 'LIKE', '%' . strtolower($keyword) . '%');
+    }
+
+    /**
      * fetch supplier details by id
      *
      * @return Supplier/NULL

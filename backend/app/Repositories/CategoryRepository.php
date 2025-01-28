@@ -29,6 +29,17 @@ class CategoryRepository implements CommonInterface
     }
 
     /**
+     * fetch all categories by search
+     *
+     * @return Builder
+     */
+    public function search(string $keyword): Builder
+    {
+        return Category::where('title', 'LIKE', '%' . strtolower($keyword) . '%')
+            ->orWhere('slug', 'LIKE', '%' . strtolower($keyword) . '%');
+    }
+
+    /**
      * fetch category details by id
      *
      * @return Category/NULL

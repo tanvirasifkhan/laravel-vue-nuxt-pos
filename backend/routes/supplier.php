@@ -8,9 +8,11 @@ use App\Http\Controllers\Supplier\ReadAllSupplierController;
 use App\Http\Controllers\Supplier\ReadSupplierController;
 use App\Http\Controllers\Supplier\UpdateSupplierController;
 use App\Http\Controllers\Supplier\DeleteSupplierController;
+use App\Http\Controllers\Supplier\SearchSupplierController;
 
 Route::post('', CreateSupplierController::class);
 Route::get('', ReadAllSupplierController::class);
+Route::get('search', SearchSupplierController::class);
 Route::get('{id}', ReadSupplierController::class);
 Route::put('{id}', UpdateSupplierController::class);
 Route::delete('{id}', DeleteSupplierController::class);
