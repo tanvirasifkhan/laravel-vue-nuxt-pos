@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Purchase;
 
 use App\Http\Controllers\Controller;
+use App\Repositories\SupplierLedgerRepository;
 use Illuminate\Http\Request;
 use App\Http\Requests\Purchase\CreatePurchaseRequest;
 use App\Http\Resources\PurchaseResource;
@@ -16,9 +17,13 @@ class CreatePurchaseController extends Controller
 
     private $purchaseRepository;
 
-    public function __construct(PurchaseRepository $purchaseRepository)
+    private $supplierLedgerRepository;
+
+    public function __construct(PurchaseRepository $purchaseRepository, SupplierLedgerRepository $supplierLedgerRepository)
     {
         $this->purchaseRepository = $purchaseRepository;
+
+        $this->supplierLedgerRepository = $supplierLedgerRepository;
     }
 
     /**
@@ -31,6 +36,8 @@ class CreatePurchaseController extends Controller
         $this->purchaseRepository->storeItems($purchase->id, $createPurchaseRequest->validated()['items']);
 
         $purchase = $this->purchaseRepository->fetch($purchase->id);
+
+        $this->supplierLedgerRepository->storeDefault($purchase);
 
         return $this->successResponse(
             successMessage: "Purchase added successfully.",

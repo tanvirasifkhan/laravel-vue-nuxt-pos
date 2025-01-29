@@ -32,6 +32,8 @@ class PurchaseRepository implements PurchaseInterface
 
     public function storeItems(int $purchaseId, string $purchaseItems): void
     {
+        $total = 0;
+
         foreach (json_decode($purchaseItems) as $item) {
             $product = Product::where('id', $item->product_id)->first();
 
@@ -43,7 +45,7 @@ class PurchaseRepository implements PurchaseInterface
                 'total' => $item->quantity * $product->per_unit_price
             ]);
 
-            $total = $item->quantity * $product->per_unit_price;
+            $total += $item->quantity * $product->per_unit_price;
 
             $this->updateProductQuantity($item->product_id, $item->quantity);
 

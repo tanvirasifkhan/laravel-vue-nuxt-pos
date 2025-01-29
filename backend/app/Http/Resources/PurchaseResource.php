@@ -24,7 +24,7 @@ class PurchaseResource extends JsonResource
             ],
             'supplier' => new SupplierResource($this->supplier),
             'items' => PurchaseItemResource::collection($this->purchaseItems),
-            'total' => $this->total
+            'total' => number_format($this->total, 2, '.', '')
         ];
     }
 }

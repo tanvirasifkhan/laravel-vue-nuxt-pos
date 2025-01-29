@@ -19,7 +19,7 @@ class PurchaseItemResource extends JsonResource
             'product' => new ProductResource($this->product),
             'quantity' => $this->quantity,
             'price' => $this->price,
-            'total' => $this->price * $this->quantity
+            'total' => number_format(($this->price * $this->quantity), 2, '.', '')
         ];
     }
 }
