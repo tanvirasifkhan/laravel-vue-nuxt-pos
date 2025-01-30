@@ -1,5 +1,7 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+  import { RouterView } from 'vue-router'
+</script>
 
 <template>
-  <h2 class="font-roboto text-2xl text-gray-600">Admin Panel</h2>
+  <RouterView />
 </template>
