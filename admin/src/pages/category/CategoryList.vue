@@ -55,7 +55,7 @@
                             <td class="py-3 px-5 text-gray-600 font-roboto">{{ category.slug }}</td>
                             <td class="py-3 px-5 text-gray-600 font-roboto space-x-2">
                                 <RouterLink :to="{name: 'update-category', params: {id: category.id}}" class="bg-indigo-500 hover:bg-indigo-700 text-white font-roboto py-1.5 px-4 rounded-3xl">Edit</RouterLink>
-                                <button @click.prevent="deleteCategory(category.id)" class="bg-red-500 hover:bg-red-700 text-white font-roboto py-1.5 px-4 rounded-3xl">Delete</button>
+                                <button @click.prevent="deleteCategory(category.id)" class="bg-red-500 hover:bg-red-700 text-white font-roboto py-1 px-4 rounded-3xl">Delete</button>
                             </td>
                         </tr>
                     </tbody>
