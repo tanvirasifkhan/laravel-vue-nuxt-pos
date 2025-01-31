@@ -12,7 +12,7 @@ use App\Http\Controllers\Product\SearchProductController;
 
 Route::post('', CreateProductController::class);
 Route::get('', ReadAllProductController::class);
-Route::get('search', SearchProductController::class);
+Route::get('search/{keyword}', SearchProductController::class);
 Route::get('{id}', ReadProductController::class);
 Route::put('{id}', UpdateProductController::class);
 Route::delete('{id}', DeleteProductController::class);

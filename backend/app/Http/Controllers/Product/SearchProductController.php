@@ -23,9 +23,9 @@ class SearchProductController extends Controller
     /**
      * Handle the incoming request.
      */
-    public function __invoke(Request $request): JsonResponse
+    public function __invoke(Request $request, string $keyword): JsonResponse
     {
-        if($request->query('keyword') == ""){
+        if($keyword == ""){
             return $this->errorResponse(
                 errorMessage: "Please provide a keyword to search.",
                 statusCode: 404,
@@ -33,7 +33,7 @@ class SearchProductController extends Controller
             );
         }
 
-        $products = $this->productRepository->search(keyword: $request->query('keyword'));
+        $products = $this->productRepository->search($keyword);
 
         if($products->count() == 0){
             return $this->errorResponse(
