@@ -19,6 +19,11 @@ const routes: RouteRecordRaw[] = [
                 path: "new",
                 component: () => import("../pages/category/CreateCategory.vue"),
                 name: "create-category"
+            },
+            {
+                path: ":id/update",
+                component: () => import("../pages/category/UpdateCategory.vue"),
+                name: "update-category"
             }
         ]
     },
