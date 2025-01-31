@@ -23,9 +23,9 @@ class SearchSupplierController extends Controller
     /**
      * Handle the incoming request.
      */
-    public function __invoke(Request $request): JsonResponse
+    public function __invoke(Request $request, string $keyword): JsonResponse
     {
-        if($request->query('keyword') == ""){
+        if($keyword == ""){
             return $this->errorResponse(
                 errorMessage: "Please provide a keyword to search.",
                 statusCode: 404,
@@ -33,7 +33,7 @@ class SearchSupplierController extends Controller
             );
         }
 
-        $suppliers = $this->supplierRepository->search($request->query('keyword') );
+        $suppliers = $this->supplierRepository->search($keyword);
 
         if($suppliers->count() == 0){
             return $this->errorResponse(
