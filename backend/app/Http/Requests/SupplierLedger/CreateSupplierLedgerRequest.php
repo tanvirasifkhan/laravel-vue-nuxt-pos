@@ -26,7 +26,7 @@ class CreateSupplierLedgerRequest extends FormRequest
             'supplier_id' => 'required|integer|exists:suppliers,id',
             'transaction_date' => 'required|date',
             'debited_amount' => 'required|numeric',
-            'description' => 'nullable'
+            'description' => 'required'
         ];
     }
 }
