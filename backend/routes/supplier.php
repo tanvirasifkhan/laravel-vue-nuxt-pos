@@ -12,7 +12,7 @@ use App\Http\Controllers\Supplier\SearchSupplierController;
 
 Route::post('', CreateSupplierController::class);
 Route::get('', ReadAllSupplierController::class);
-Route::get('search/{keyword}', SearchSupplierController::class);
+Route::get('search', SearchSupplierController::class);
 Route::get('{id}', ReadSupplierController::class);
 Route::put('{id}', UpdateSupplierController::class);
 Route::delete('{id}', DeleteSupplierController::class);

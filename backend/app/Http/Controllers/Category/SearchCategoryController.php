@@ -25,7 +25,7 @@ class SearchCategoryController extends Controller
      */
     public function __invoke(Request $request, string $keyword): JsonResponse
     {
-        if($keyword == ""){
+        if($request->query('keyword') == ""){
             return $this->errorResponse(
                 errorMessage: "Please provide a keyword to search.",
                 statusCode: 404,
@@ -33,7 +33,7 @@ class SearchCategoryController extends Controller
             );
         }
 
-        $categories = $this->categoryRepository->search($keyword);
+        $categories = $this->categoryRepository->search($request->query('keyword'));
 
         if($categories->count() == 0){
             return $this->errorResponse(

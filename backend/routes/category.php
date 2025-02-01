@@ -12,7 +12,7 @@ use App\Http\Controllers\Category\SearchCategoryController;
 
 Route::post('', CreateCategoryController::class);
 Route::get('', ReadAllCategoryController::class);
-Route::get('search/{keyword}', SearchCategoryController::class);
+Route::get('search', SearchCategoryController::class);
 Route::get('{id}', ReadCategoryController::class);
 Route::put('{id}', UpdateCategoryController::class);
 Route::delete('{id}', DeleteCategoryController::class);
