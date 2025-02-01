@@ -1,8 +1,22 @@
 <script setup lang="ts">
     import AppLayout from '../../layouts/AppLayout.vue'
-    import { onMounted } from 'vue'
+    import { onMounted, ref } from 'vue'
+    import { usePurchaseStore, type PurchaseOrder } from '../../store/purchaseStore'
+    import { useRoute } from 'vue-router'
+
+    const purchaseStore = usePurchaseStore()
+    const route = useRoute()
+    const purchase = ref<PurchaseOrder>({} as PurchaseOrder)
+
+    const id = Number(route.params.id)
 
     onMounted(()=> document.title = 'Purchase Order Details')
+
+    onMounted(()=> {
+        purchaseStore.show(id)
+            .then(response => purchase.value = response.data.data)
+            .catch(()=> alert('Purchase not found.'))
+    })
 </script>
 
 <template>
@@ -12,31 +26,19 @@
                 <div class="border-b border-gray-200 flex items-center justify-between py-3 px-5">
                     <h2 class="font-roboto text-gray-700 text-lg">Purchase Order Details</h2>
                 </div>
-                <form action="" class="p-5">
+                <div class="p-5 space-y-2">
                     <div class="flex items-center justify-between space-x-2">
                         <div class="flex flex-col w-6/12 space-y-2">
-                            <label for="date" class="font-roboto text-lg text-gray-600">Purchase Date <span class="text-red-600" title="Required">*</span></label>
-                            <input type="date" placeholder="Purchase Date" id="date" class="border border-gray-200 font-roboto text-gray-500 rounded-2xl py-2 px-4 outline-none focus:outline-none">
-                            <p class="font-roboto text-red-500"></p>
+                            <h3 class="font-roboto text-lg text-gray-600">Purchase Date</h3>
+                            <h2 class="font-roboto text-gray-800 text-xl">{{ purchase.date?.human }}</h2>
                         </div>
                         <div class="flex flex-col w-6/12 space-y-2">
-                            <label for="Supplier" class="font-roboto text-lg text-gray-600">Supplier <span class="text-red-600" title="Required">*</span></label>
-                                <select id="Supplier" class="border border-gray-200 font-roboto text-gray-500 rounded-2xl py-2 px-4 outline-none focus:outline-none">
-                            <option value="">Choose a Supplier</option>
-                            </select>
-                            <p class="font-roboto text-red-500"></p>
+                            <h3 class="font-roboto text-lg text-gray-600">Supplier</h3>
+                            <h2 class="font-roboto text-gray-800 text-xl">{{ purchase.supplier?.name }}</h2>
                         </div>
-                    </div>
-                    <div class="py-6 space-y-2">
-                        <h2 class="text-xl font-roboto text-gray-600">Please add product items to the purchase</h2>
-                        <div class="flex flex-col w-6/12 space-y-2">
-                            <select class="border border-gray-200 font-roboto text-gray-500 rounded-2xl py-2 px-4 outline-none focus:outline-none">
-                                <option value="">Choose a Product</option>
-                            </select>
-                            <p class="font-roboto text-red-500"></p>
-                        </div>
-                    </div>
-                    <div class="py-4 flex flex-col space-y-2">
+                    </div>                    
+                    <div class="py-4 flex flex-col space-y-3">
+                        <h2 class="font-roboto text-gray-600 text-xl">Items</h2>
                         <table class="w-full">
                             <thead>
                                 <tr class="bg-gray-100 border-b border-gray-200">
@@ -44,47 +46,23 @@
                                     <th class="text-left py-3 px-5 font-roboto text-gray-700 font-normal uppercase text-sm whitespace-nowrap">Price</th>
                                     <th class="text-left py-3 px-5 font-roboto text-gray-700 font-normal uppercase text-sm whitespace-nowrap">Quantity</th>
                                     <th class="text-left py-3 px-5 font-roboto text-gray-700 font-normal uppercase text-sm whitespace-nowrap">Subtotal</th>
-                                    <th class="p-3 text-gray-600 font-roboto font-normal flex items-center space-x-2">Action</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td class="py-3 px-5 text-gray-600 font-roboto">Product One</td>
-                                    <td class="py-3 px-5 text-gray-600 font-roboto">20</td>
-                                    <td class="py-3 px-5 text-gray-600 font-roboto">
-                                        <input type="number" placeholder="Quantity" class="border border-gray-200 font-roboto text-gray-500 rounded-2xl py-2 px-4 outline-none focus:outline-none">
-                                    </td>
-                                    <td class="py-3 px-5 text-gray-600 font-roboto">200</td>
-                                    <td class="py-3 px-5 text-gray-600 font-roboto space-x-2">
-                                        <button class="bg-red-500 hover:bg-red-700 text-white font-roboto py-1.5 px-4 rounded-3xl">Delete</button>
-                                    </td>
-                                </tr>
-                                <tr class="bg-gray-50">
-                                    <td class="py-3 px-5 text-gray-600 font-roboto">Product One</td>
-                                    <td class="py-3 px-5 text-gray-600 font-roboto">20</td>
-                                    <td class="py-3 px-5 text-gray-600 font-roboto">
-                                        <input type="number" placeholder="Quantity" class="border border-gray-200 font-roboto text-gray-500 rounded-2xl py-2 px-4 outline-none focus:outline-none">
-                                    </td>
-                                    <td class="py-3 px-5 text-gray-600 font-roboto">200</td>
-                                    <td class="py-3 px-5 text-gray-600 font-roboto space-x-2">
-                                        <button class="bg-red-500 hover:bg-red-700 text-white font-roboto py-1.5 px-4 rounded-3xl">Delete</button>
-                                    </td>
+                                <tr v-for="item in purchase?.items" :key="item.id" :class="[item.id % 2 === 0 ? 'bg-gray-50' : '']">
+                                    <td class="py-3 px-5 text-gray-600 font-roboto">{{ item.product.name }}</td>
+                                    <td class="py-3 px-5 text-gray-600 font-roboto">{{ item.product.per_unit_price }}</td>
+                                    <td class="py-3 px-5 text-gray-600 font-roboto">{{ item.quantity }}</td>
+                                    <td class="py-3 px-5 text-gray-600 font-roboto">{{ item.total }}</td>
                                 </tr>
                                 <tr>
-                                    <td class="py-3 px-5 text-gray-600 font-roboto">Product One</td>
-                                    <td class="py-3 px-5 text-gray-600 font-roboto">20</td>
-                                    <td class="py-3 px-5 text-gray-600 font-roboto">
-                                        <input type="number" placeholder="Quantity" class="border border-gray-200 font-roboto text-gray-500 rounded-2xl py-2 px-4 outline-none focus:outline-none">
-                                    </td>
-                                    <td class="py-3 px-5 text-gray-600 font-roboto">200</td>
-                                    <td class="py-3 px-5 text-gray-600 font-roboto space-x-2">
-                                        <button class="bg-red-500 hover:bg-red-700 text-white font-roboto py-1.5 px-4 rounded-3xl">Delete</button>
-                                    </td>
+                                    <td colspan="3" class="py-3 px-5 text-gray-800 font-roboto text-right uppercase">Total</td>
+                                    <td class="py-3 px-5 text-gray-600 font-roboto">{{ purchase.total }}</td>
                                 </tr>
                             </tbody>
                         </table>
                     </div>
-                </form>
+                </div>
             </div>          
         </div>
     </AppLayout>

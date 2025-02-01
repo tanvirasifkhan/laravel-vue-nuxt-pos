@@ -23,7 +23,7 @@ class SearchCategoryController extends Controller
     /**
      * Handle the incoming request.
      */
-    public function __invoke(Request $request, string $keyword): JsonResponse
+    public function __invoke(Request $request): JsonResponse
     {
         if($request->query('keyword') == ""){
             return $this->errorResponse(

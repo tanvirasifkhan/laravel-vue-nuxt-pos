@@ -18,7 +18,7 @@ export const update = (id: number, payload: Product) => {
 }
 
 export const search = (keyword: string) => {
-    return API.get(`products/search/${keyword}`)
+    return API.get('products/search', { params: { keyword: keyword }})
 }
 
 export const remove = (id: number) => {

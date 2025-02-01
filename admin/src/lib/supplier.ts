@@ -18,7 +18,7 @@ export const update = (id: number, payload: Supplier) => {
 }
 
 export const search = (keyword: string) => {
-    return API.get(`suppliers/search/${keyword}`)
+    return API.get('suppliers/search', { params: { keyword: keyword }})
 }
 
 export const remove = (id: number) => {
