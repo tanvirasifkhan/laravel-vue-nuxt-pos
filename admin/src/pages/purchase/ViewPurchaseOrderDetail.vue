@@ -63,7 +63,10 @@
                         </table>
                     </div>
                 </div>
-            </div>          
+            </div> 
+            <div class="flex justify-center mt-3">
+                <button @click="$router.push({name: 'purchase-order-list'})" class="bg-indigo-600 text-white cursor-pointer font-roboto text-lg px-4 py-1.5 rounded-3xl">Back</button>         
+            </div>
         </div>
     </AppLayout>
 </template>

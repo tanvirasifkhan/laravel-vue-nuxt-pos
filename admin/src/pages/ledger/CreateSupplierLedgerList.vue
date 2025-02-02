@@ -89,7 +89,7 @@
                             <input type="number" disabled placeholder="Amount" :value="supplierLedgerList.credited_amount" id="amount" class="border border-gray-200 font-roboto text-gray-500 bg-gray-100 rounded-2xl py-2 px-4 outline-none focus:outline-none">
                         </div>
                         <div class="flex flex-col w-6/12 space-y-2">
-                            <label for="description" class="font-roboto text-lg text-gray-600">Remarks</label>
+                            <label for="description" class="font-roboto text-lg text-gray-600">Remarks <span class="text-red-600" title="Required">*</span></label>
                             <input type="text" id="description" placeholder="Remarks" v-model="supplierLedger.description" class="border border-gray-200 font-roboto text-gray-500 rounded-2xl py-2 px-4 outline-none focus:outline-none" />
                         </div>
                     </div>               
