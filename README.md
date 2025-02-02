@@ -68,7 +68,7 @@ and `cd /laravel-vue-nuxt-pos`
  
 ### STEP #2:  Building Docker Image
  
-then build the docker using `docker compose up -d` command from the root folder. It will take some time based on your internet connection to complete. After building the Docker there will be 
+then build the docker using `docker compose up -d` command from the root folder. It will take some time based on your internet connection to complete.You can run `docker ps` command to check.After building the Docker there will be 
 
 **Four Containers ( Running on ports )**
 
@@ -96,7 +96,7 @@ DB_PASSWORD=
 
 Now access your `phpMyadmin` panel inside your browser on port `localhost:8080` and create a database called `pos`.
 
-Then from the root folder of your project run `docker exec pos-backend php artisan migrate` command to create all the tables in the database. Then run `docker exec pos-backend php artisan db:seed` to prepopulate dummy datas (Category, Product, Supplier module).
+Then from the root folder of your project run `docker exec -it pos-backend php artisan migrate` command to create all the tables in the database. Then run `docker exec -it pos-backend php artisan db:seed` to prepopulate dummy datas for Category, Product, Supplier modules.
 
 Now guess what, you are good to access the whole application in the browser.
 
@@ -106,7 +106,7 @@ Now guess what, you are good to access the whole application in the browser.
 
 You can now play around with the application.
 
-Hope, the application runs smoothly. Enjoy and thanks
+Hope, the application runs smoothly. Enjoy and thanks. If you have any query, then send an email to `asifkhan.github@gmail.com`. Thanks
 
 
 
