@@ -7,8 +7,8 @@
 
 <template>
     <AppLayout>
-        <div class="w-10/12 mx-auto">
-          <h2 class="text-gray-600 text-xl font-roboto">Welcome to Dashboard</h2>
+        <div class="mx-auto my-72 justify-center items-center flex">
+          <h2 class="text-gray-600 text-5xl font-roboto">Welcome to Dashboard</h2>
         </div>
     </AppLayout>
 </template>
